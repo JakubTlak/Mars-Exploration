@@ -69,24 +69,30 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
         SimulationContextData contextData = generateContext(roverSight);
         Coordinate shipLocation = contextData.spaceshipLocation();
         MarsRover rover = contextData.marsRover();
-
         Coordinate roverStartingPosition = rover.getCurrentPosition();
         List<Coordinate> allMovesRoutine = routineGenerator.generateSearchRoutine(roverStartingPosition,totalSteps);
         List<Coordinate> movesDone = new ArrayList<>();
-
-
         int currentStep = 0;
 
         displayInitialMessages(shipLocation);
         displayCurrentStep(currentStep, rover, "The rover has been deployed");
+        exploreMap(allMovesRoutine, movesDone, currentStep, rover);
+        moveRoverBackToShip(movesDone, currentStep, rover);
+    }
 
+    private void exploreMap(List<Coordinate> allMovesRoutine,
+                            List<Coordinate> movesDone,
+                            int currentStep,
+                            MarsRover rover){
         while (!meetsFinishCondition) {
             Coordinate coordinateToMove = allMovesRoutine.get(currentStep);
             movesDone.add(coordinateToMove);
             simulateRoverBehaviourForOneStep(currentStep, rover, coordinateToMove);
             currentStep++;
         }
+    }
 
+    private void moveRoverBackToShip(List<Coordinate> movesDone, int currentStep, MarsRover rover){
         List<Coordinate> returnMoves = routineGenerator.generateReturnRoutine(movesDone);
         int returnStep = 0;
         while (returnStep < returnMoves.size()){
