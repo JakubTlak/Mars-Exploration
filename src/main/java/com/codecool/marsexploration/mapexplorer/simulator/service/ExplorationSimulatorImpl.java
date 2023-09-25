@@ -19,6 +19,7 @@ import java.util.List;
 
 public class ExplorationSimulatorImpl implements ExplorationSimulator {
     private boolean meetsFinishCondition = false;
+    private int currentStep = 0;
 
     private final int totalSteps;
     private final int roverSight;
@@ -72,85 +73,84 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
         Coordinate roverStartingPosition = rover.getCurrentPosition();
         List<Coordinate> allMovesRoutine = routineGenerator.generateSearchRoutine(roverStartingPosition,totalSteps);
         List<Coordinate> movesDone = new ArrayList<>();
-        int currentStep = 0;
+
 
         displayInitialMessages(shipLocation);
-        displayCurrentStep(currentStep, rover, "The rover has been deployed");
-        exploreMap(allMovesRoutine, movesDone, currentStep, rover);
-        moveRoverBackToShip(movesDone, currentStep, rover);
+        displayCurrentStep(rover, "The rover has been deployed");
+        exploreMap(allMovesRoutine, movesDone, rover);
+        moveRoverBackToShip(movesDone, rover);
     }
 
     private void exploreMap(List<Coordinate> allMovesRoutine,
                             List<Coordinate> movesDone,
-                            int currentStep,
                             MarsRover rover){
         while (!meetsFinishCondition) {
             Coordinate coordinateToMove = allMovesRoutine.get(currentStep);
             movesDone.add(coordinateToMove);
-            simulateRoverBehaviourForOneStep(currentStep, rover, coordinateToMove);
-            currentStep++;
+            simulateRoverBehaviourForOneStep(rover, coordinateToMove);
+            currentStep += 1;
         }
     }
 
-    private void moveRoverBackToShip(List<Coordinate> movesDone, int currentStep, MarsRover rover){
+    private void moveRoverBackToShip(List<Coordinate> movesDone, MarsRover rover){
         List<Coordinate> returnMoves = routineGenerator.generateReturnRoutine(movesDone);
         int returnStep = 0;
         while (returnStep < returnMoves.size()){
-            moveRover(currentStep,rover,returnMoves.get(returnStep));
+            moveRover(rover,returnMoves.get(returnStep));
             returnStep++;
-            currentStep++;
+            currentStep += 1;
         }
     }
 
-    private void simulateRoverBehaviourForOneStep(int currentStep, MarsRover rover, Coordinate coordinateToMove) {
-        moveRover(currentStep, rover, coordinateToMove);
-        scanTheArea(currentStep, rover);
-        analyseInformation(currentStep, rover);
+    private void simulateRoverBehaviourForOneStep(MarsRover rover, Coordinate coordinateToMove) {
+        moveRover(rover, coordinateToMove);
+        scanTheArea(rover);
+        analyseInformation(rover);
     }
 
-    private void moveRover(int currentStep, MarsRover rover, Coordinate coordinateToMove) {
+    private void moveRover(MarsRover rover, Coordinate coordinateToMove) {
         rover.setCurrentPosition(coordinateToMove);
-        displayCurrentStep(currentStep, rover, SimulationSteps.POSITION.name());
+        displayCurrentStep(rover, SimulationSteps.POSITION.name());
     }
 
-    private void scanTheArea(int currentStep, MarsRover rover) {
+    private void scanTheArea(MarsRover rover) {
         simulatorScanner.scanForResources(rover);
-        displayCurrentStep(currentStep, rover, SimulationSteps.SCAN.name());
+        displayCurrentStep(rover, SimulationSteps.SCAN.name());
     }
 
-    private void analyseInformation(int currentStep, MarsRover rover) {
-        hasReachedTimeoutCheck(currentStep, rover);
-        meetsColonizationConditionsCheck(currentStep, rover);
-        hasNotEnoughResourcesCheck(currentStep, rover);
+    private void analyseInformation(MarsRover rover) {
+        hasReachedTimeoutCheck(rover);
+        meetsColonizationConditionsCheck(rover);
+        hasNotEnoughResourcesCheck(rover);
     }
 
-    private void hasReachedTimeoutCheck(int currentStep, MarsRover rover){
+    private void hasReachedTimeoutCheck(MarsRover rover){
         boolean hasReachedTimeout = outcomeAnalyzer.hasReachedTimeout(currentStep, totalSteps);
         if (hasReachedTimeout) {
-            displayCurrentStep(currentStep, rover,
+            displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.TIMEOUT.name());
             setMeetsFinishCondition(true);
         }
     }
 
-    private void meetsColonizationConditionsCheck(int currentStep, MarsRover rover){
+    private void meetsColonizationConditionsCheck(MarsRover rover){
         boolean meetsColonizationConditions = outcomeAnalyzer.meetsColonizationConditions(mineralSymbol,
                 waterSymbol, rover);
         if (meetsColonizationConditions) {
-            displayCurrentStep(currentStep, rover,
+            displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.COLONIZABLE.name());
             setMeetsFinishCondition(true);
         }
     }
 
-    private void hasNotEnoughResourcesCheck(int currentStep, MarsRover rover){
+    private void hasNotEnoughResourcesCheck(MarsRover rover){
         boolean hasNotEnoughResources = outcomeAnalyzer.hasNotEnoughResources(mineralSymbol,
                 waterSymbol,
                 rover,
                 currentStep,
                 totalSteps);
         if (hasNotEnoughResources) {
-            displayCurrentStep(currentStep, rover,
+            displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.ERROR.name());
             setMeetsFinishCondition(true);
         }
@@ -189,7 +189,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
         return mapLoader.load(mapPath);
     }
 
-    private void displayCurrentStep(int currentStep, MarsRover rover, String event) {
+    private void displayCurrentStep(MarsRover rover, String event) {
         fileLogger.logInfo("STEP: " + currentStep + "," +
                 " EVENT: " + event + "," +
                 " UNIT: " + rover.getRover_id() + "," +
@@ -205,4 +205,5 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
     private void setMeetsFinishCondition(boolean meetsFinishCondition) {
         this.meetsFinishCondition = meetsFinishCondition;
     }
+
 }
