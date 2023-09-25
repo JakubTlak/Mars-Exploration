@@ -7,7 +7,6 @@ import com.codecool.marsexploration.mapelements.model.Map;
 import com.codecool.marsexploration.mapexplorer.configuration.model.SimulationConfiguration;
 import com.codecool.marsexploration.mapexplorer.rovers.model.MarsRover;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -51,7 +50,7 @@ public class RoverPlacer {
 
     public MarsRover placeRover(int sight) {
 
-        return new MarsRover(getPlacementPosition(), sight, new HashMap<>());
+        return new MarsRover(getPlacementPosition(), sight);
     }
 
     public void setMap(Map map) {

@@ -8,6 +8,8 @@ import com.codecool.marsexploration.mapelements.model.Map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 public class RoutineGenerator {
@@ -55,28 +57,25 @@ public class RoutineGenerator {
 
     private Coordinate getNextCoordinate(Coordinate currentCoordinate) {
         Iterable<Coordinate> adjacentCoordinates = coordinateCalculator.getAdjacentCoordinates(currentCoordinate, dimension);
-        List<Coordinate> adjacentEmptyCoordinates = new ArrayList<>();
-        Coordinate nextMove = null;
-        adjacentCoordinates.forEach(adjacentEmptyCoordinates::add);
+
+        List<Coordinate> adjacentEmptyCoordinates = streamToList(adjacentCoordinates);
 
         Collections.shuffle(adjacentEmptyCoordinates);
 
-        for (Coordinate nextCoordinate : adjacentEmptyCoordinates) {
-            if (map.isEmpty(nextCoordinate) && !visitedCoordinates.contains(nextCoordinate)) {
-                nextMove = nextCoordinate;
-                break;
-            }
-        }
-        if (nextMove == null){
-            for (Coordinate nextCoordinate : adjacentEmptyCoordinates) {
-                if (map.isEmpty(nextCoordinate)) {
-                    nextMove = nextCoordinate;
-                    break;
-                }
-            }
-        }
-        return nextMove;
+        return adjacentEmptyCoordinates.stream()
+                .filter(nextCoordinate -> map.isEmpty(nextCoordinate) && !visitedCoordinates.contains(nextCoordinate))
+                .findFirst()
+                .orElseGet(() -> adjacentEmptyCoordinates.stream()
+                        .filter(nextCoordinate -> map.isEmpty(nextCoordinate))
+                        .findFirst()
+                        .orElse(null));
     }
+
+    private List<Coordinate> streamToList(Iterable<Coordinate> coordinates) {
+        return StreamSupport.stream(coordinates.spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
     public void setMap(Map map) {
         this.map = map;
     }
