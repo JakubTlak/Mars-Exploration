@@ -9,19 +9,17 @@ public class MarsRover {
     private final String rover_id;
     private Coordinate currentPosition;
     private final int sight;
-    private final Map<String, List<Coordinate>> resourceCoordinates = new HashMap<>();
+    private final Map<String, Set<Coordinate>> resourceCoordinates = new HashMap<>();
 
-    public MarsRover(Coordinate currentPosition, int sight, Map<String, List<Coordinate>> resourceCoordinates) {
-//        this.resourceCoordinates = resourceCoordinates;
+    public MarsRover(Coordinate currentPosition, int sight) {
         this.rover_id = "rover-" + idCount;
         this.currentPosition = currentPosition;
         this.sight = sight;
-
         idCount++;
     }
 
-    public Map<String, List<Coordinate>> getResourceCoordinates() {
-        return resourceCoordinates;
+    public Map<String, Set<Coordinate>> getResourceCoordinates() {
+        return Collections.unmodifiableMap(resourceCoordinates);
     }
 
     public String getRover_id() {
@@ -41,17 +39,8 @@ public class MarsRover {
     }
 
     public void addResourceCoordinate(String resourceSymbol,List<Coordinate> foundResources) {
-
-        if(resourceCoordinates.get(resourceSymbol) == null){
-            resourceCoordinates.put(resourceSymbol,new ArrayList<>(new HashSet<>(foundResources)));
-        }
-        else {
-            List<Coordinate> allCoordinates = new ArrayList<>();
-            allCoordinates.addAll(resourceCoordinates.get(resourceSymbol));
-            allCoordinates.addAll(foundResources);
-            resourceCoordinates.put(resourceSymbol,new ArrayList<>(new HashSet<>(allCoordinates)));
-        }
-
+        resourceCoordinates.computeIfAbsent(resourceSymbol, k -> new HashSet<>())
+                .addAll(foundResources);
     }
 
     @Override
