@@ -6,6 +6,7 @@ import java.util.*;
 
 public class MarsRover {
     public int idCount = 1;
+    private int currentStep = 0;
     private final String rover_id;
     private Coordinate currentPosition;
     private final int sight;
@@ -67,5 +68,13 @@ public class MarsRover {
                 ", sight=" + sight +
                 ", resourceCoordinates=" + resourceCoordinates +
                 '}';
+    }
+
+    public int getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(int currentStep) {
+        this.currentStep = currentStep;
     }
 }

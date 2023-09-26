@@ -42,8 +42,6 @@ public class RoverExplorationFunctionalityImpl implements RoverExplorationFuncti
         int roverSight = ConstantValues.ROVER_SIGHT;
         int mapDimension = ConstantValues.MAP_DIMENSION;
         String mapFile = ConstantValues.MAP_TO_LOAD_PATH;
-        String mineralSymbol = ConstantValues.MINERAL_SYMBOL;
-        String waterSymbol = ConstantValues.WATER_SYMBOL;
 
         clearTextFile(loggFile);
 
@@ -62,8 +60,6 @@ public class RoverExplorationFunctionalityImpl implements RoverExplorationFuncti
         ExplorationSimulator explorationSimulator = new ExplorationSimulatorImpl(
                 totalSteps,
                 roverSight,
-                mineralSymbol,
-                waterSymbol,
                 mapLoader,
                 roverPlacer,
                 outcomeAnalyzer,
