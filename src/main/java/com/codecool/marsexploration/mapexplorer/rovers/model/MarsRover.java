@@ -11,6 +11,8 @@ public class MarsRover {
     private final int sight;
     private final Map<String, List<Coordinate>> resourceCoordinates = new HashMap<>();
 
+    private ArrayList<String> gatheredResources = new ArrayList<>();
+
     public MarsRover(Coordinate currentPosition, int sight, Map<String, List<Coordinate>> resourceCoordinates) {
 //        this.resourceCoordinates = resourceCoordinates;
         this.rover_id = "rover-" + idCount;
@@ -40,7 +42,15 @@ public class MarsRover {
         return sight;
     }
 
-    public void addResourceCoordinate(String resourceSymbol,List<Coordinate> foundResources) {
+    public ArrayList<String> getGatheredResources() {
+        return gatheredResources;
+    }
+
+    public void setGatheredResources(ArrayList<String> gatheredResources) {
+        this.gatheredResources = gatheredResources;
+    }
+
+    public void addResourceCoordinate(String resourceSymbol, List<Coordinate> foundResources) {
 
         if(resourceCoordinates.get(resourceSymbol) == null){
             resourceCoordinates.put(resourceSymbol,new ArrayList<>(new HashSet<>(foundResources)));
