@@ -9,7 +9,9 @@ public interface ConstantValues {
     int SIMULATION_STEPS = 10;
     int TOTAL_STEPS = 600;
     int ROVER_SIGHT = 4;
+
     int MAP_DIMENSION = 64;
+    int ROVER_DEPLOY_DIMENSION = 1;
 
     String WORK_DIR = "src/main";
     String EXPLORATION_LOG_PATH = WORK_DIR + "/resources/steps.txt";
