@@ -11,7 +11,6 @@ import java.io.IOException;
 public class Application {
 
     public static void main(String[] args) throws IOException {
-
         ConsoleLoggerImpl consoleLogger = new ConsoleLoggerImpl();
         CoordinateCalculatorImpl coordinateCalculator = new CoordinateCalculatorImpl();
 
@@ -23,7 +22,4 @@ public class Application {
         generateMapFunctionality.generateMap();
         explorationFunctionality.startRoverExploration();
     }
-
-
 }
-
