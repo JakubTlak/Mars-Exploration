@@ -1,7 +1,6 @@
 package com.codecool.marsexploration;
 
 import com.codecool.marsexploration.calculators.service.*;
-import com.codecool.marsexploration.constants.ConstantValues;
 import com.codecool.marsexploration.logger.service.ConsoleLoggerImpl;
 import com.codecool.marsexploration.mainfunctionality.service.GenerateMapFunctionality;
 import com.codecool.marsexploration.mainfunctionality.service.GenerateMapFunctionalityImpl;

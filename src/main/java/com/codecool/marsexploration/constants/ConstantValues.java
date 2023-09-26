@@ -17,6 +17,8 @@ public interface ConstantValues {
     String SAVE_MAP_FOLDER_PATH = WORK_DIR + "/resources/";
     String MINERAL_SYMBOL = "%";
     String WATER_SYMBOL = "*";
+    String MOUNTAIN_SYMBOL = "#";
+    String PIT_SYMBOL = "&";
 
     Coordinate LANDING_SPOT = new Coordinate(6, 6);
 

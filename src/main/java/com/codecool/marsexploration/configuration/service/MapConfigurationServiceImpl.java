@@ -3,15 +3,16 @@ package com.codecool.marsexploration.configuration.service;
 import com.codecool.marsexploration.configuration.model.ElementToSize;
 import com.codecool.marsexploration.configuration.model.MapConfiguration;
 import com.codecool.marsexploration.configuration.model.MapElementConfiguration;
+import com.codecool.marsexploration.constants.ConstantValues;
 
 import java.util.List;
 
 public class MapConfigurationServiceImpl implements MapConfigurationService{
     public MapConfiguration getConfiguration() {
-        final String mountainSymbol = "#";
-        final String pitSymbol = "&";
-        final String mineralSymbol = "%";
-        final String waterSymbol = "*";
+        final String mountainSymbol = ConstantValues.MOUNTAIN_SYMBOL;
+        final String pitSymbol = ConstantValues.PIT_SYMBOL;
+        final String mineralSymbol = ConstantValues.MINERAL_SYMBOL;
+        final String waterSymbol = ConstantValues.WATER_SYMBOL;
 
         MapElementConfiguration mountainsCfg = new MapElementConfiguration(
                 mountainSymbol,
