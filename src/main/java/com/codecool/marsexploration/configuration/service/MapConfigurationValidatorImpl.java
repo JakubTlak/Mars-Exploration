@@ -3,6 +3,7 @@ package com.codecool.marsexploration.configuration.service;
 import com.codecool.marsexploration.configuration.model.ElementToSize;
 import com.codecool.marsexploration.configuration.model.MapConfiguration;
 import com.codecool.marsexploration.configuration.model.MapElementConfiguration;
+import com.codecool.marsexploration.constants.ConstantValues;
 import com.codecool.marsexploration.logger.service.ConsoleLoggerImpl;
 import org.atteo.evo.inflector.English;
 
@@ -29,15 +30,21 @@ public class MapConfigurationValidatorImpl implements MapConfigurationValidator 
     }
 
     private boolean validateAllElements(MapConfiguration mapConfig) {
+        final String mountainSymbol = ConstantValues.MOUNTAIN_SYMBOL;
+        final String pitSymbol = ConstantValues.PIT_SYMBOL;
+        final String mineralSymbol = ConstantValues.MINERAL_SYMBOL;
+        final String waterSymbol = ConstantValues.WATER_SYMBOL;
+        final String emptyFieldSymbol = ConstantValues.EMPTY_FIELD_SYMBOL;
         Set<String> totalElements = new HashSet<>();
+
         for (MapElementConfiguration element : mapConfig.mapElementConfigurations()) {
             switch (element.name()) {
                 case "mountain" -> {
                     if (validateElement(element,
                             true,
                             "mountain",
-                            "#",
-                            "",
+                            mountainSymbol,
+                            emptyFieldSymbol,
                             3
                     )) {
                         totalElements.add(element.name());
@@ -47,8 +54,8 @@ public class MapConfigurationValidatorImpl implements MapConfigurationValidator 
                     if (validateElement(element,
                             true,
                             "pit",
-                            "&",
-                            "",
+                            pitSymbol,
+                            emptyFieldSymbol,
                             10)) {
                         totalElements.add(element.name());
                     }
@@ -57,8 +64,8 @@ public class MapConfigurationValidatorImpl implements MapConfigurationValidator 
                     if (validateElement(element,
                             false,
                             "mineral",
-                            "%",
-                            "#",
+                            mineralSymbol,
+                            mountainSymbol,
                             0)) {
                         totalElements.add(element.name());
                     }
@@ -67,8 +74,8 @@ public class MapConfigurationValidatorImpl implements MapConfigurationValidator 
                     if (validateElement(element,
                             false,
                             "water",
-                            "*",
-                            "&",
+                            waterSymbol,
+                            pitSymbol,
                             0)) {
                         totalElements.add(element.name());
                     }

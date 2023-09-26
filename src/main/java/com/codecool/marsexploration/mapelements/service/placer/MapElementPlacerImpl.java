@@ -2,24 +2,25 @@ package com.codecool.marsexploration.mapelements.service.placer;
 
 import com.codecool.marsexploration.calculators.model.Coordinate;
 import com.codecool.marsexploration.calculators.service.CoordinateCalculatorImpl;
+import com.codecool.marsexploration.constants.ConstantValues;
 import com.codecool.marsexploration.mapelements.model.MapElement;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class MapElementPlacerImpl implements MapElementPlacer {
     private final CoordinateCalculatorImpl coordinateCalculator;
+
+    final String emptyFieldSymbol = ConstantValues.EMPTY_FIELD_SYMBOL;
+    private final int mapDimensionSize = (int) Math.sqrt(ConstantValues.MAP_SIZE);
 
     public MapElementPlacerImpl(CoordinateCalculatorImpl coordinateCalculator) {
         this.coordinateCalculator = coordinateCalculator;
     }
 
-
     @Override
     public boolean canPlaceElement(MapElement element, String[][] map, Coordinate coordinate) {
         int x = coordinate.x();
         int y = coordinate.y();
-        int mapSize = 64;
 
         List<Coordinate> areaToCheck = new ArrayList<>();
         for (int i = 0; i < element.getDimension(); i++) {
@@ -27,23 +28,26 @@ public class MapElementPlacerImpl implements MapElementPlacer {
                 areaToCheck.add(new Coordinate(x + i, y + j));
             }
         }
-        if (areaToCheck.stream().allMatch(coord -> coord.x() < mapSize && coord.y() < mapSize)) {
-            return areaToCheck.stream().allMatch(c -> Objects.equals(map[c.x()][c.y()], " "));
+        if (areaToCheck.stream().allMatch(coord -> coord.x() < mapDimensionSize && coord.y() < mapDimensionSize)) {
+            return areaToCheck.stream().allMatch(c -> Objects.equals(map[c.x()][c.y()], emptyFieldSymbol));
         }
         return false;
     }
 
     @Override
     public void placeElement(MapElement element, String[][] map, Coordinate coordinate) {
+        final String mountainSymbol = ConstantValues.MOUNTAIN_SYMBOL;
+        final String pitSymbol = ConstantValues.PIT_SYMBOL;
+
         switch (element.getName()) {
             case "mountain", "pit" -> {
                 setPitsAndMountainsOnMap(element, map, coordinate);
             }
             case "mineral" -> {
-                setMineralsOnMap(element, map, "%");
+                setMineralsOnMap(element, map, mountainSymbol);
             }
             case "water" -> {
-                setMineralsOnMap(element, map, "*");
+                setMineralsOnMap(element, map, pitSymbol);
             }
         }
     }
@@ -69,10 +73,10 @@ public class MapElementPlacerImpl implements MapElementPlacer {
             Coordinate randomElementCoordinate = findRandomPreferredSymbolCoordinates(map, preferredElementSymbol);
 
             Iterable<Coordinate> adjacentFields = coordinateCalculator.getAdjacentCoordinates(randomElementCoordinate,
-                    64);
+                    mapDimensionSize);
 
             for (Coordinate coord : adjacentFields) {
-                if (map[coord.x()][coord.y()].equals(" ")) {
+                if (map[coord.x()][coord.y()].equals(emptyFieldSymbol)) {
                     emptyFieldsList.add(coord);
                 }
             }

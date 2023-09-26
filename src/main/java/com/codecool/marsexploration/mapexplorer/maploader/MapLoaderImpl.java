@@ -1,5 +1,6 @@
 package com.codecool.marsexploration.mapexplorer.maploader;
 
+import com.codecool.marsexploration.constants.ConstantValues;
 import com.codecool.marsexploration.mapelements.model.Map;
 
 import java.io.BufferedReader;
@@ -8,10 +9,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class MapLoaderImpl implements MapLoader{
+    private final int mapDimensionSize = (int) Math.sqrt(ConstantValues.MAP_SIZE);
+
     @Override
     public Map load(String mapFile) {
 
-        String[][] representation = new String[64][64];
+        String[][] representation = new String[mapDimensionSize][mapDimensionSize];
 
         try {
             FileReader fileReader = new FileReader(mapFile);

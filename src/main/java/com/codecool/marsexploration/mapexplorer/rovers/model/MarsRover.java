@@ -6,24 +6,29 @@ import java.util.*;
 
 public class MarsRover {
     public int idCount = 1;
+    private int currentStep = 0;
     private final String rover_id;
     private Coordinate currentPosition;
     private final int sight;
-    private final Map<String, List<Coordinate>> resourceCoordinates = new HashMap<>();
+    private final Map<String, Set<Coordinate>> resourceCoordinates = new HashMap<>();
 
-    private ArrayList<String> gatheredResources = new ArrayList<>();
+    private final RoverType roverType;
 
-    public MarsRover(Coordinate currentPosition, int sight, Map<String, List<Coordinate>> resourceCoordinates) {
-//        this.resourceCoordinates = resourceCoordinates;
+    private List<String> gatheredResources;
+
+
+
+    public MarsRover(Coordinate currentPosition, int sight, RoverType type) {
         this.rover_id = "rover-" + idCount;
         this.currentPosition = currentPosition;
         this.sight = sight;
-
+        this.roverType = type;
+        gatheredResources = new ArrayList<>();
         idCount++;
     }
 
-    public Map<String, List<Coordinate>> getResourceCoordinates() {
-        return resourceCoordinates;
+    public Map<String, Set<Coordinate>> getResourceCoordinates() {
+        return Collections.unmodifiableMap(resourceCoordinates);
     }
 
     public String getRover_id() {
@@ -42,7 +47,7 @@ public class MarsRover {
         return sight;
     }
 
-    public ArrayList<String> getGatheredResources() {
+    public List<String> getGatheredResources() {
         return gatheredResources;
     }
 
@@ -50,18 +55,19 @@ public class MarsRover {
         this.gatheredResources = gatheredResources;
     }
 
+
+    public RoverType getRoverType() {
+        return roverType;
+    }
+
+
     public void addResourceCoordinate(String resourceSymbol, List<Coordinate> foundResources) {
+        resourceCoordinates.computeIfAbsent(resourceSymbol, k -> new HashSet<>())
+                .addAll(foundResources);
+    }
 
-        if(resourceCoordinates.get(resourceSymbol) == null){
-            resourceCoordinates.put(resourceSymbol,new ArrayList<>(new HashSet<>(foundResources)));
-        }
-        else {
-            List<Coordinate> allCoordinates = new ArrayList<>();
-            allCoordinates.addAll(resourceCoordinates.get(resourceSymbol));
-            allCoordinates.addAll(foundResources);
-            resourceCoordinates.put(resourceSymbol,new ArrayList<>(new HashSet<>(allCoordinates)));
-        }
-
+    public void gatherResource(String resource){
+        gatheredResources.add(resource);
     }
 
     @Override
@@ -72,5 +78,13 @@ public class MarsRover {
                 ", sight=" + sight +
                 ", resourceCoordinates=" + resourceCoordinates +
                 '}';
+    }
+
+    public int getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(int currentStep) {
+        this.currentStep = currentStep;
     }
 }
