@@ -61,6 +61,10 @@ public class MarsRover {
     }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3672f6a93866feee30be4f55ae4a5b297368d45e
     public void addResourceCoordinate(String resourceSymbol, List<Coordinate> foundResources) {
         resourceCoordinates.computeIfAbsent(resourceSymbol, k -> new HashSet<>())
                 .addAll(foundResources);

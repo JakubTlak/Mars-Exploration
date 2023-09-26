@@ -10,7 +10,7 @@ import com.codecool.marsexploration.mapexplorer.simulator.model.SimulationSteps;
 import java.util.List;
 
 public class RoverBehaviourImpl implements RoverBehaviour{
-    private boolean meetsFinishCondition = false;
+    private ExplorationOutcome outcome = null;
 
     private final ExplorationSimulatorScannerImpl simulatorScanner;
     private final RoutineGenerator routineGenerator;
@@ -28,10 +28,18 @@ public class RoverBehaviourImpl implements RoverBehaviour{
     }
 
     @Override
-    public void exploreMap(List<Coordinate> allMovesRoutine,
+    public void executeRoverRoutine(List<Coordinate> allMovesRoutine, List<Coordinate> movesDone, MarsRover rover) {
+        exploreMap(allMovesRoutine, movesDone, rover);
+
+        if(outcome != ExplorationOutcome.COLONIZABLE){
+            moveRoverBackToShip(movesDone,rover);
+        }
+    }
+
+    private void exploreMap(List<Coordinate> allMovesRoutine,
                             List<Coordinate> movesDone,
                             MarsRover rover){
-        while (!meetsFinishCondition) {
+        while (outcome == null) {
             Coordinate coordinateToMove = allMovesRoutine.get(rover.getCurrentStep());
             movesDone.add(coordinateToMove);
             simulateRoverBehaviourForOneStep(rover, coordinateToMove);
@@ -39,8 +47,7 @@ public class RoverBehaviourImpl implements RoverBehaviour{
         }
     }
 
-    @Override
-    public void moveRoverBackToShip(List<Coordinate> movesDone, MarsRover rover){
+    private void moveRoverBackToShip(List<Coordinate> movesDone, MarsRover rover){
         List<Coordinate> returnMoves = routineGenerator.generateReturnRoutine(movesDone);
         int returnStep = 0;
         while (returnStep < returnMoves.size()){
@@ -77,7 +84,7 @@ public class RoverBehaviourImpl implements RoverBehaviour{
         if (hasReachedTimeout) {
             simulationMessages.displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.TIMEOUT.name());
-            setMeetsFinishCondition(true);
+            outcome = ExplorationOutcome.TIMEOUT;
         }
     }
 
@@ -86,7 +93,7 @@ public class RoverBehaviourImpl implements RoverBehaviour{
         if (meetsColonizationConditions) {
             simulationMessages.displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.COLONIZABLE.name());
-            setMeetsFinishCondition(true);
+            outcome = ExplorationOutcome.COLONIZABLE;
         }
     }
 
@@ -95,12 +102,7 @@ public class RoverBehaviourImpl implements RoverBehaviour{
         if (hasNotEnoughResources) {
             simulationMessages.displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.ABORT.name());
-            setMeetsFinishCondition(true);
+            outcome = ExplorationOutcome.ABORT;
         }
     }
-
-    private void setMeetsFinishCondition(boolean meetsFinishCondition) {
-        this.meetsFinishCondition = meetsFinishCondition;
-    }
-
 }

@@ -25,7 +25,7 @@ public class BuildColonyImpl implements BuildColony{
         for(int i =0;i<rover.getGatheredResources().size();i++){
             if(rover.getGatheredResources().get(i) == "*"){
                 amountOfWater ++;
-            }else if{
+            }else if(rover.getGatheredResources().get(i) == "%"){
                 amountOfMinerals++;
             }
         }

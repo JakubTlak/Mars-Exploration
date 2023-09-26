@@ -6,8 +6,7 @@ import com.codecool.marsexploration.mapexplorer.rovers.model.MarsRover;
 import java.util.List;
 
 public interface RoverBehaviour {
-    void exploreMap(List<Coordinate> allMovesRoutine,
-                    List<Coordinate> movesDone,
-                    MarsRover rover);
-    void moveRoverBackToShip(List<Coordinate> movesDone, MarsRover rover);
+    void executeRoverRoutine(List<Coordinate> allMovesRoutine,
+                         List<Coordinate> movesDone,
+                         MarsRover rover);
 }
