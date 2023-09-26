@@ -36,18 +36,18 @@ public class MapElementPlacerImpl implements MapElementPlacer {
 
     @Override
     public void placeElement(MapElement element, String[][] map, Coordinate coordinate) {
-        final String mountainSymbol = ConstantValues.MOUNTAIN_SYMBOL;
-        final String pitSymbol = ConstantValues.PIT_SYMBOL;
+        final String mineralSymbol = ConstantValues.MINERAL_SYMBOL;
+        final String waterSymbol = ConstantValues.WATER_SYMBOL;
 
         switch (element.getName()) {
             case "mountain", "pit" -> {
                 setPitsAndMountainsOnMap(element, map, coordinate);
             }
             case "mineral" -> {
-                setMineralsOnMap(element, map, mountainSymbol);
+                setMineralsOnMap(element, map, mineralSymbol);
             }
             case "water" -> {
-                setMineralsOnMap(element, map, pitSymbol);
+                setMineralsOnMap(element, map, waterSymbol);
             }
         }
     }

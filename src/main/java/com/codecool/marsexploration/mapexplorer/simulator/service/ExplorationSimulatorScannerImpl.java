@@ -44,7 +44,6 @@ public class ExplorationSimulatorScannerImpl implements ExplorationSimulatorScan
         ArrayList<Coordinate> coordinatesOfWater = new ArrayList<>();
         ArrayList<Coordinate> coordinatesOfMinerals = new ArrayList<>();
 
-
         allCoordinatesInSight.forEach(coordinate ->{
             if(Objects.equals(map.getByCoordinate(coordinate), waterSymbol)){
                 coordinatesOfWater.add(coordinate);
@@ -56,6 +55,5 @@ public class ExplorationSimulatorScannerImpl implements ExplorationSimulatorScan
 
         rover.addResourceCoordinate(waterSymbol, coordinatesOfWater);
         rover.addResourceCoordinate(mineralSymbol, coordinatesOfMinerals);
-
     }
 }

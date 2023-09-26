@@ -73,8 +73,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
 
         simulationMessages.displayInitialMessages(shipLocation);
         simulationMessages.displayCurrentStep(rover, "The rover has been deployed");
-        roverBehaviour.exploreMap(allMovesRoutine, movesDone, rover);
-        roverBehaviour.moveRoverBackToShip(movesDone, rover);
+        roverBehaviour.executeRoverRoutine(allMovesRoutine, movesDone, rover);
     }
 
     /**
