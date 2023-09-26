@@ -6,6 +6,7 @@ import com.codecool.marsexploration.mainfunctionality.service.GenerateMapFunctio
 import com.codecool.marsexploration.mainfunctionality.service.GenerateMapFunctionalityImpl;
 import com.codecool.marsexploration.mainfunctionality.service.RoverExplorationFunctionality;
 import com.codecool.marsexploration.mainfunctionality.service.RoverExplorationFunctionalityImpl;
+
 import java.io.IOException;
 
 public class Application {

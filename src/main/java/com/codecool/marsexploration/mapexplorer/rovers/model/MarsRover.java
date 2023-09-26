@@ -11,10 +11,18 @@ public class MarsRover {
     private final int sight;
     private final Map<String, Set<Coordinate>> resourceCoordinates = new HashMap<>();
 
-    public MarsRover(Coordinate currentPosition, int sight) {
+    private final RoverType roverType;
+
+    private final List<String> gatheredRecources;
+
+
+
+    public MarsRover(Coordinate currentPosition, int sight, RoverType type) {
         this.rover_id = "rover-" + idCount;
         this.currentPosition = currentPosition;
         this.sight = sight;
+        this.roverType = type;
+        gatheredRecources = new ArrayList<>();
         idCount++;
     }
 
@@ -38,9 +46,17 @@ public class MarsRover {
         return sight;
     }
 
-    public void addResourceCoordinate(String resourceSymbol,List<Coordinate> foundResources) {
+    public RoverType getRoverType() {
+        return roverType;
+    }
+
+    public void addResourceCoordinate(String resourceSymbol, List<Coordinate> foundResources) {
         resourceCoordinates.computeIfAbsent(resourceSymbol, k -> new HashSet<>())
                 .addAll(foundResources);
+    }
+
+    public void gatherResource(String resource){
+        gatheredRecources.add(resource);
     }
 
     @Override
