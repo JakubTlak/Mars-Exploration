@@ -54,7 +54,9 @@ public class GenerateMapFunctionalityImpl implements GenerateMapFunctionality{
             consoleLogger.logError("MAP CONFIG NOT ALLOWED");
             return;
         }
-        createAndWriteMaps(3, mapGenerator, mapConfig);
+
+        int numberOfMaps = ConstantValues.GENERATE_MAP_QUANTITY;
+        createAndWriteMaps(numberOfMaps, mapGenerator, mapConfig);
         System.out.println("Mars maps successfully generated.");
     }
 

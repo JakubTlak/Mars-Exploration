@@ -5,6 +5,7 @@ import com.codecool.marsexploration.calculators.service.CoordinateCalculatorImpl
 import com.codecool.marsexploration.calculators.service.DimensionCalculatorImpl;
 import com.codecool.marsexploration.configuration.model.MapConfiguration;
 import com.codecool.marsexploration.configuration.service.MapConfigurationValidatorImpl;
+import com.codecool.marsexploration.constants.ConstantValues;
 import com.codecool.marsexploration.mapelements.model.Map;
 import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.builder.MapElementBuilderImpl;
@@ -67,9 +68,11 @@ public class MapGeneratorImpl implements MapGenerator {
     }
 
     private String[][] fillEmptyMap(String[][] map, int size) {
+        final String emptyFieldSymbol = ConstantValues.EMPTY_FIELD_SYMBOL;
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                map[i][j] = " ";
+                map[i][j] = emptyFieldSymbol;
             }
         }
         return map;

@@ -5,6 +5,7 @@ import com.codecool.marsexploration.calculators.service.CoordinateCalculator;
 import com.codecool.marsexploration.constants.ConstantValues;
 import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapexplorer.rovers.model.MarsRover;
+import com.codecool.marsexploration.mapexplorer.rovers.model.RoverType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,14 @@ public class ColonyServicesImpl implements ColonyServices{
     public MarsRover buildRover(Coordinate colonyCoordinates,
                                 List<MapElement> colonyResources,
                                 List<MapElement> resourcesNeededToBuildRover,
-                                String[][] map) {
+                                String[][] map,
+                                RoverType roverType) {
 
         int sight = ConstantValues.ROVER_SIGHT;
         removeResourcesFromColonyStock(colonyResources, resourcesNeededToBuildRover);
         Coordinate deployPosition = getDeployPosition(colonyCoordinates, map);
 
-        return new MarsRover(deployPosition, sight);
+        return new MarsRover(deployPosition, sight, roverType);
     }
 
     private void removeResourcesFromColonyStock(List<MapElement> colonyResources,
@@ -66,6 +68,6 @@ public class ColonyServicesImpl implements ColonyServices{
     }
 
     private boolean canPlaceRover(Coordinate colonyCoordinates, String[][] map){
-        return map[colonyCoordinates.x()][colonyCoordinates.y()].equals(" ");
+        return map[colonyCoordinates.x()][colonyCoordinates.y()].equals(ConstantValues.EMPTY_FIELD_SYMBOL);
     }
 }

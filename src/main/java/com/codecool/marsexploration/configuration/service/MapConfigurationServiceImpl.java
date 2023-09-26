@@ -13,6 +13,7 @@ public class MapConfigurationServiceImpl implements MapConfigurationService{
         final String pitSymbol = ConstantValues.PIT_SYMBOL;
         final String mineralSymbol = ConstantValues.MINERAL_SYMBOL;
         final String waterSymbol = ConstantValues.WATER_SYMBOL;
+        final String emptyFieldSymbol = ConstantValues.EMPTY_FIELD_SYMBOL;
 
         MapElementConfiguration mountainsCfg = new MapElementConfiguration(
                 mountainSymbol,
@@ -22,7 +23,7 @@ public class MapConfigurationServiceImpl implements MapConfigurationService{
                         new ElementToSize(1, 30)
                 ),
                 3,
-                ""
+                emptyFieldSymbol
         );
         MapElementConfiguration pitCfg = new MapElementConfiguration(
                 pitSymbol,
@@ -32,7 +33,7 @@ public class MapConfigurationServiceImpl implements MapConfigurationService{
                         new ElementToSize(1, 20)
                 ),
                 10,
-                ""
+                emptyFieldSymbol
         );
         MapElementConfiguration mineralCfg = new MapElementConfiguration(
                 mineralSymbol,
@@ -53,9 +54,11 @@ public class MapConfigurationServiceImpl implements MapConfigurationService{
                 pitSymbol
         );
 
-
         List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg, pitCfg, mineralCfg, waterCfg);
-        return new MapConfiguration(4096, 0.5, elementsCfg);
+        int mapSize = ConstantValues.MAP_SIZE;
+        double elementToSpaceRatio = ConstantValues.ELEMENT_TO_SPACE_RATIO;
+
+        return new MapConfiguration(mapSize, elementToSpaceRatio, elementsCfg);
     }
 
 }

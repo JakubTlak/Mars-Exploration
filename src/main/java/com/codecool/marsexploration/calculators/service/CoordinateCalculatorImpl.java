@@ -17,62 +17,7 @@ public class CoordinateCalculatorImpl implements CoordinateCalculator {
 
     @Override
     public Iterable<Coordinate> getAdjacentCoordinates(Coordinate coordinate, int dimension) {
-//
-//        ArrayList<Coordinate> coordinates = new ArrayList<>();
-//
-//        if(coordinate.x() == 0 && coordinate.y() == 0){
-//
-//            coordinates.add(new Coordinate(1,0));
-//            coordinates.add(new Coordinate(0,1));
-//
-//        } else if (coordinate.x() == dimension && coordinate.y() == 0) {
-//
-//            coordinates.add(new Coordinate((dimension - 1),0));
-//            coordinates.add(new Coordinate(dimension,1));
-//
-//        } else if (coordinate.x() == 0 && coordinate.y() == dimension) {
-//
-//            coordinates.add(new Coordinate(1,dimension));
-//            coordinates.add(new Coordinate(0,(dimension - 1)));
-//
-//        } else if (coordinate.x() == dimension && coordinate.y() == dimension) {
-//
-//            coordinates.add(new Coordinate((dimension - 1),dimension));
-//            coordinates.add(new Coordinate(dimension,(dimension - 1)));
-//
-//        }else if(coordinate.x() > 0 && coordinate.x() < dimension && coordinate.y() == 0) {
-//
-//            coordinates.add(new Coordinate(coordinate.x(), 1));
-//            coordinates.add(new Coordinate((coordinate.x() + 1), coordinate.y()));
-//            coordinates.add(new Coordinate((coordinate.x() - 1), coordinate.y()));
-//
-//        }else if(coordinate.x() > 0 && coordinate.x() < dimension && coordinate.y() == dimension) {
-//
-//            coordinates.add(new Coordinate(coordinate.x(), (coordinate.y()) - 1));
-//            coordinates.add(new Coordinate((coordinate.x() + 1), coordinate.y()));
-//            coordinates.add(new Coordinate((coordinate.x() - 1), coordinate.y()));
-//
-//        }else if(coordinate.y() > 0 && coordinate.y() < dimension && coordinate.x() == 0) {
-//
-//            coordinates.add(new Coordinate(1, coordinate.y()));
-//            coordinates.add(new Coordinate(coordinate.x(), coordinate.y() - 1));
-//            coordinates.add(new Coordinate(coordinate.x(), coordinate.y() + 1));
-//
-//        }else if(coordinate.y() > 0 && coordinate.y() < dimension && coordinate.x() == dimension) {
-//
-//            coordinates.add(new Coordinate(coordinate.x() - 1, coordinate.y()));
-//            coordinates.add(new Coordinate(coordinate.x(), coordinate.y() - 1));
-//            coordinates.add(new Coordinate(coordinate.x(), coordinate.y() + 1));
-//
-//        }else{
-//
-//            coordinates.add(new Coordinate(coordinate.x(), (coordinate.y()+1)));
-//            coordinates.add(new Coordinate(coordinate.x(), (coordinate.y()-1)));
-//            coordinates.add(new Coordinate((coordinate.x()+1), (coordinate.y())));
-//            coordinates.add(new Coordinate((coordinate.x()-1), (coordinate.y())));
-//
-//        }
-//        return coordinates;
+
         ArrayList<Coordinate> coordinates = new ArrayList<>();
 
         int x = coordinate.x();

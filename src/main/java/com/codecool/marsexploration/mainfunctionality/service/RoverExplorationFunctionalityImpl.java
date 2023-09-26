@@ -13,6 +13,7 @@ import com.codecool.marsexploration.mapexplorer.configuration.service.Simulation
 import com.codecool.marsexploration.mapexplorer.maploader.MapLoader;
 import com.codecool.marsexploration.mapexplorer.maploader.MapLoaderImpl;
 import com.codecool.marsexploration.mapexplorer.routines.RoutineGenerator;
+import com.codecool.marsexploration.mapexplorer.rovers.model.RoverType;
 import com.codecool.marsexploration.mapexplorer.rovers.service.RoverPlacer;
 import com.codecool.marsexploration.mapexplorer.simulator.service.ExplorationSimulator;
 import com.codecool.marsexploration.mapexplorer.simulator.service.ExplorationSimulatorImpl;
@@ -50,7 +51,7 @@ public class RoverExplorationFunctionalityImpl implements RoverExplorationFuncti
         MapLoader mapLoader = new MapLoaderImpl();
         Map map = mapLoader.load(mapFile);
         RoutineGenerator routineGenerator = new RoutineGenerator(map, mapDimension);
-        RoverPlacer roverPlacer = new RoverPlacer(simulation, map, mapDimension);
+        RoverPlacer roverPlacer = new RoverPlacer(simulation,coordinateCalculator, map, mapDimension, RoverType.EXPLORER);
         OutcomeAnalyzer outcomeAnalyzer = new OutcomeAnalyzerImpl();
         SimulationConfigurationValidatorImpl simulationConfigurationValidator =
                 new SimulationConfigurationValidatorImpl(mapLoader, consoleLogger, mapFile);
