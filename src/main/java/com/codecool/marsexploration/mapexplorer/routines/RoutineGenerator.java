@@ -5,9 +5,7 @@ import com.codecool.marsexploration.calculators.service.CoordinateCalculator;
 import com.codecool.marsexploration.calculators.service.CoordinateCalculatorImpl;
 import com.codecool.marsexploration.mapelements.model.Map;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -53,6 +51,43 @@ public class RoutineGenerator {
     public List<Coordinate> generateReturnRoutine(List<Coordinate> exploredRoute) {
         Collections.reverse(exploredRoute);
         return exploredRoute;
+    }
+
+    public List<Coordinate> generateGatherRoutine(Coordinate startCoordinate, Coordinate finalCoordinate) {
+        Queue<Coordinate> queue = new LinkedList<>();
+        queue.add(startCoordinate);
+
+        HashMap<Coordinate, Coordinate> parentMap = new HashMap<>();
+        parentMap.put(startCoordinate, null);
+
+        while (!queue.isEmpty()) {
+            Coordinate current = queue.poll();
+
+            if (current.equals(finalCoordinate)) {
+                return getPathToFinalCoordinate(parentMap, finalCoordinate);
+            }
+
+            Iterable<Coordinate> neighbors = coordinateCalculator.getAdjacentCoordinates(current,dimension);
+
+            for (Coordinate neighbor : neighbors) {
+                if (!parentMap.containsKey(neighbor)) {
+                    queue.add(neighbor);
+                    parentMap.put(neighbor, current);
+                }
+            }
+        }
+        return Collections.emptyList();
+    }
+
+    private List<Coordinate> getPathToFinalCoordinate(HashMap<Coordinate, Coordinate> parentMap, Coordinate finalCoordinate) {
+        List<Coordinate> path = new ArrayList<>();
+        Coordinate current = finalCoordinate;
+        while (current != null) {
+            path.add(current);
+            current = parentMap.get(current);
+        }
+        Collections.reverse(path);
+        return path;
     }
 
     private Coordinate getNextCoordinate(Coordinate currentCoordinate) {

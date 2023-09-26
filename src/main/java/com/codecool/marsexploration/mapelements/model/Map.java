@@ -40,6 +40,13 @@ public class Map {
                 || representation[coordinate.x()][coordinate.y()].equals(" ");
     }
 
+    public void changeMapElement(Coordinate coordinate, String string){
+        int x = coordinate.x();
+        int y = coordinate.y();
+               if (x >= 0 && x < representation.length && y >= 0 && y < representation[x].length) {
+            representation[x][y] = string;
+        }
+    }
     @Override
     public String toString() {
         return createStringRepresentation(representation);
