@@ -81,7 +81,7 @@ public class SimulationConfigurationValidatorImpl implements SimulationConfigura
      * @return true if file path is not empty, false otherwise
      */
     private boolean isMapPathNotEmpty() {
-        boolean condition = !filePath.isEmpty();
+        boolean condition = !(filePath != null && !filePath.trim().isEmpty());
         if (!condition) {
             logger.logError("File path not empty: FAILED");
         }

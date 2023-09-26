@@ -1,6 +1,7 @@
 package com.codecool.marsexploration.mapexplorer.configuration.service;
 
 import com.codecool.marsexploration.calculators.model.Coordinate;
+import com.codecool.marsexploration.constants.ConstantValues;
 import com.codecool.marsexploration.logger.service.ConsoleLogger;
 import com.codecool.marsexploration.logger.service.ConsoleLoggerImpl;
 import com.codecool.marsexploration.mapexplorer.configuration.model.SimulationConfiguration;
@@ -17,7 +18,7 @@ class SimulationConfigurationValidatorImplTest {
 
     MapLoader mapLoader = new MapLoaderImpl();
     ConsoleLogger consoleLogger = new ConsoleLoggerImpl();
-    String mapFilePath = "src/main/resources/exploration-0.map";
+    String mapFilePath = ConstantValues.MAP_TO_LOAD_PATH;
 
     SimulationConfiguration simulationConfiguration;
     Coordinate landingCoordinate;
@@ -46,7 +47,7 @@ class SimulationConfigurationValidatorImplTest {
         symbolsToScan.add("#");
         simulationStepsToTimeout = 100;
         simulationConfiguration =
-                new SimulationConfiguration(mapFilePath, new Coordinate(16, 7), symbolsToScan, simulationStepsToTimeout);
+                new SimulationConfiguration(mapFilePath, new Coordinate(40, 10), symbolsToScan, simulationStepsToTimeout);
         assertFalse(simulationConfigurationValidator.validate(simulationConfiguration));
     }
 
@@ -55,7 +56,7 @@ class SimulationConfigurationValidatorImplTest {
         symbolsToScan.add("#");
         simulationStepsToTimeout = 100;
         simulationConfiguration =
-                new SimulationConfiguration(mapFilePath, new Coordinate(16, 7), symbolsToScan, simulationStepsToTimeout);
+                new SimulationConfiguration(mapFilePath, new Coordinate(40, 10), symbolsToScan, simulationStepsToTimeout);
         assertFalse(simulationConfigurationValidator.validate(simulationConfiguration));
     }
 
