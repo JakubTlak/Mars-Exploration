@@ -35,7 +35,9 @@ public class RoverPlacer {
     }
 
     private Coordinate getPlacementPosition() {
-        Iterable<Coordinate> adjacentCoordinates = coordinateCalculator.getAdjacentCoordinates(configuration.landingCoordinate(), dimension);
+        Iterable<Coordinate> adjacentCoordinates = coordinateCalculator.getAdjacentCoordinates(
+                configuration.landingCoordinate(),
+                dimension);
 
         Stream<Coordinate> coordinateStream = StreamSupport.stream(adjacentCoordinates.spliterator(), false);
 

@@ -1,7 +1,7 @@
 package com.codecool.marsexploration.mapexplorer.exploration;
 
 public enum ExplorationOutcome {
-    ERROR,
+    ABORT,
     TIMEOUT,
     COLONIZABLE
 }

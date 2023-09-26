@@ -12,8 +12,6 @@ import com.codecool.marsexploration.mapelements.service.builder.MapElementBuilde
 import com.codecool.marsexploration.mapelements.service.placer.MapElementPlacerImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class MapGeneratorImpl implements MapGenerator {
 

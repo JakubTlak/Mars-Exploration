@@ -125,7 +125,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
     }
 
     private void hasReachedTimeoutCheck(MarsRover rover){
-        boolean hasReachedTimeout = outcomeAnalyzer.hasReachedTimeout(currentStep, totalSteps);
+        boolean hasReachedTimeout = outcomeAnalyzer.hasReachedTimeout(currentStep);
         if (hasReachedTimeout) {
             displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.TIMEOUT.name());
@@ -134,8 +134,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
     }
 
     private void meetsColonizationConditionsCheck(MarsRover rover){
-        boolean meetsColonizationConditions = outcomeAnalyzer.meetsColonizationConditions(mineralSymbol,
-                waterSymbol, rover);
+        boolean meetsColonizationConditions = outcomeAnalyzer.meetsColonizationConditions(rover);
         if (meetsColonizationConditions) {
             displayCurrentStep(rover,
                     SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.COLONIZABLE.name());
@@ -144,14 +143,10 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
     }
 
     private void hasNotEnoughResourcesCheck(MarsRover rover){
-        boolean hasNotEnoughResources = outcomeAnalyzer.hasNotEnoughResources(mineralSymbol,
-                waterSymbol,
-                rover,
-                currentStep,
-                totalSteps);
+        boolean hasNotEnoughResources = outcomeAnalyzer.hasNotEnoughResources(rover, currentStep);
         if (hasNotEnoughResources) {
             displayCurrentStep(rover,
-                    SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.ERROR.name());
+                    SimulationSteps.OUTCOME.name() + " " + ExplorationOutcome.ABORT.name());
             setMeetsFinishCondition(true);
         }
     }
