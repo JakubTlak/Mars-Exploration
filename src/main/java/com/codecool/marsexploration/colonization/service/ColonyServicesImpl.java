@@ -21,8 +21,8 @@ public class ColonyServicesImpl implements ColonyServices{
 
     @Override
     public MarsRover buildRover(Coordinate colonyCoordinates,
-                                List<MapElement> colonyResources,
-                                List<MapElement> resourcesNeededToBuildRover,
+                                List<String> colonyResources,
+                                List<String> resourcesNeededToBuildRover,
                                 String[][] map,
                                 RoverType roverType) {
 
@@ -33,12 +33,12 @@ public class ColonyServicesImpl implements ColonyServices{
         return new MarsRover(deployPosition, sight, roverType);
     }
 
-    private void removeResourcesFromColonyStock(List<MapElement> colonyResources,
-                                                List<MapElement> resourcesNeededToBuildRover){
+    private void removeResourcesFromColonyStock(List<String> colonyResources,
+                                                List<String> resourcesNeededToBuildRover){
 
         if(colonyResources.containsAll(resourcesNeededToBuildRover)) {
-            for (MapElement mapElement : resourcesNeededToBuildRover) {
-                colonyResources.remove(mapElement);
+            for (String element : resourcesNeededToBuildRover) {
+                colonyResources.remove(element);
             }
         }
     }

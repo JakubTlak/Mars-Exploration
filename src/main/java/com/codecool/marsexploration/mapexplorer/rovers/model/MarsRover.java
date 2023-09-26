@@ -13,7 +13,7 @@ public class MarsRover {
 
     private final RoverType roverType;
 
-    private final List<String> gatheredRecources;
+    private final List<String> gatheredResources;
 
 
 
@@ -22,7 +22,7 @@ public class MarsRover {
         this.currentPosition = currentPosition;
         this.sight = sight;
         this.roverType = type;
-        gatheredRecources = new ArrayList<>();
+        gatheredResources = new ArrayList<>();
         idCount++;
     }
 
@@ -56,7 +56,7 @@ public class MarsRover {
     }
 
     public void gatherResource(String resource){
-        gatheredRecources.add(resource);
+        gatheredResources.add(resource);
     }
 
     @Override

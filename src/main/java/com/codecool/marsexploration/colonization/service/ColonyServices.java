@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ColonyServices {
     MarsRover buildRover(Coordinate colonyCoordinates,
-                         List<MapElement> colonyResources,
-                         List<MapElement> resourcesNeededToBuildRover,
+                         List<String> colonyResources,
+                         List<String> resourcesNeededToBuildRover,
                          String[][] map,
                          RoverType roverType);
 }
