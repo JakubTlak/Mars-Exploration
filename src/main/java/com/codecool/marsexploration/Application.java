@@ -6,6 +6,8 @@ import com.codecool.marsexploration.mainfunctionality.service.GenerateMapFunctio
 import com.codecool.marsexploration.mainfunctionality.service.GenerateMapFunctionalityImpl;
 import com.codecool.marsexploration.mainfunctionality.service.RoverExplorationFunctionality;
 import com.codecool.marsexploration.mainfunctionality.service.RoverExplorationFunctionalityImpl;
+import com.codecool.marsexploration.repositories.Connector;
+
 
 import java.io.IOException;
 
@@ -22,5 +24,10 @@ public class Application {
 
         generateMapFunctionality.generateMap();
         explorationFunctionality.startRoverExploration();
+
+        String dbFile = "src/main/resources/simulation_data.db";
+        Connector connector = new Connector(dbFile,consoleLogger);
+
+
     }
 }
