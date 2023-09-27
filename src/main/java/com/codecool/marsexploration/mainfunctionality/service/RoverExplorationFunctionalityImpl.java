@@ -14,10 +14,10 @@ import com.codecool.marsexploration.mapexplorer.maploader.MapLoader;
 import com.codecool.marsexploration.mapexplorer.maploader.MapLoaderImpl;
 import com.codecool.marsexploration.mapexplorer.routines.RoutineGenerator;
 import com.codecool.marsexploration.mapexplorer.rovers.model.RoverType;
+import com.codecool.marsexploration.mapexplorer.rovers.service.MoveRover;
+import com.codecool.marsexploration.mapexplorer.rovers.service.MoveRoverImpl;
 import com.codecool.marsexploration.mapexplorer.rovers.service.RoverPlacer;
-import com.codecool.marsexploration.mapexplorer.simulator.service.ExplorationSimulator;
-import com.codecool.marsexploration.mapexplorer.simulator.service.ExplorationSimulatorImpl;
-import com.codecool.marsexploration.mapexplorer.simulator.service.ExplorationSimulatorScannerImpl;
+import com.codecool.marsexploration.mapexplorer.simulator.service.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -56,6 +56,8 @@ public class RoverExplorationFunctionalityImpl implements RoverExplorationFuncti
         ExplorationSimulatorScannerImpl simulatorScanner = new ExplorationSimulatorScannerImpl(coordinateCalculator,
                 map);
         FileLoggerImpl fileLogger = new FileLoggerImpl(loggFile);
+        SimulationMessages simulationMessages = new SimulationMessagesImpl(fileLogger);
+        MoveRover moveRover = new MoveRoverImpl(simulationMessages);
 
         ExplorationSimulator explorationSimulator = new ExplorationSimulatorImpl(
                 totalSteps,
@@ -67,7 +69,8 @@ public class RoverExplorationFunctionalityImpl implements RoverExplorationFuncti
                 simulationConfigurationValidator,
                 routineGenerator,
                 simulatorScanner,
-                fileLogger);
+                fileLogger,
+                moveRover);
 
         explorationSimulator.simulateRoverExploration();
     }

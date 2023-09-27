@@ -9,6 +9,9 @@ import com.codecool.marsexploration.mapexplorer.configuration.service.Simulation
 import com.codecool.marsexploration.mapexplorer.maploader.MapLoader;
 import com.codecool.marsexploration.mapexplorer.routines.RoutineGenerator;
 import com.codecool.marsexploration.mapexplorer.rovers.model.MarsRover;
+import com.codecool.marsexploration.mapexplorer.rovers.service.MoveRover;
+import com.codecool.marsexploration.mapexplorer.rovers.service.RoverBehaviour;
+import com.codecool.marsexploration.mapexplorer.rovers.service.RoverBehaviourImpl;
 import com.codecool.marsexploration.mapexplorer.rovers.service.RoverPlacer;
 import com.codecool.marsexploration.mapexplorer.simulator.model.SimulationContextData;
 
@@ -27,6 +30,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
     private final RoutineGenerator routineGenerator;
     private final ExplorationSimulatorScannerImpl simulatorScanner;
     private final FileLoggerImpl fileLogger;
+    private final MoveRover moveRover;
 
     public ExplorationSimulatorImpl(int totalSteps,
                                     int roverSight,
@@ -37,7 +41,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
                                     SimulationConfigurationValidatorImpl simulationConfigurationValidator,
                                     RoutineGenerator routineGenerator,
                                     ExplorationSimulatorScannerImpl simulatorScanner,
-                                    FileLoggerImpl fileLogger) {
+                                    FileLoggerImpl fileLogger, MoveRover moveRover) {
         this.totalSteps = totalSteps;
         this.roverSight = roverSight;
         this.mapLoader = mapLoader;
@@ -48,6 +52,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
         this.routineGenerator = routineGenerator;
         this.simulatorScanner = simulatorScanner;
         this.fileLogger = fileLogger;
+        this.moveRover = moveRover;
     }
 
     @Override
@@ -62,7 +67,8 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
                 simulatorScanner,
                 routineGenerator,
                 outcomeAnalyzer,
-                simulationMessages);
+                simulationMessages,
+                moveRover);
 
         SimulationContextData contextData = generateContext(roverSight);
         Coordinate shipLocation = contextData.spaceshipLocation();

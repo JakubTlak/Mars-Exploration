@@ -1,4 +1,4 @@
-package com.codecool.marsexploration.mapexplorer.simulator.service;
+package com.codecool.marsexploration.mapexplorer.rovers.service;
 
 import com.codecool.marsexploration.calculators.model.Coordinate;
 import com.codecool.marsexploration.mapexplorer.rovers.model.MarsRover;
