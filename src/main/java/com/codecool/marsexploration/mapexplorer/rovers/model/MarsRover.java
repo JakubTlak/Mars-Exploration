@@ -14,7 +14,7 @@ public class MarsRover {
 
     private final RoverType roverType;
 
-    private final List<String> gatheredResources;
+    private List<String> gatheredResources;
 
 
 
@@ -47,12 +47,24 @@ public class MarsRover {
         return sight;
     }
 
+    public List<String> getGatheredResources() {
+        return gatheredResources;
+    }
+
+    public void setGatheredResources(ArrayList<String> gatheredResources) {
+        this.gatheredResources = gatheredResources;
+    }
+
+
     public RoverType getRoverType() {
         return roverType;
     }
 
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 3672f6a93866feee30be4f55ae4a5b297368d45e
     public void addResourceCoordinate(String resourceSymbol, List<Coordinate> foundResources) {
         resourceCoordinates.computeIfAbsent(resourceSymbol, k -> new HashSet<>())
                 .addAll(foundResources);
