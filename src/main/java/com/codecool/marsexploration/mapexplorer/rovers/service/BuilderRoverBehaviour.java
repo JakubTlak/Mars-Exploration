@@ -6,9 +6,6 @@ import com.codecool.marsexploration.mapexplorer.rovers.model.MarsRover;
 
 import java.util.List;
 
-public interface ExplorerRoverBehaviour {
-    void executeExplorerRoverBehaviour(List<Coordinate> allMovesRoutine,
-                                       List<Coordinate> movesDone,
-                                       MarsRover rover,
-                                       Map map);
+public interface BuilderRoverBehaviour {
+    public void executeBuilderRoverBehaviour(MarsRover rover,Map map, Coordinate coordinateOfLastMaterial);
 }

@@ -16,7 +16,8 @@ public class SimulationMessagesImpl implements SimulationMessages{
                 " EVENT: " + event + "," +
                 " UNIT: " + rover.getRover_id() + "," +
                 "POSITION [" + rover.getCurrentPosition().x() + "," +
-                rover.getCurrentPosition().y() + "]");
+                rover.getCurrentPosition().y() + "]"
+                + "," + " TYPE: " + rover.getRoverType().name());
     }
 
     public void displayInitialMessages(Coordinate spaceshipLocation) {

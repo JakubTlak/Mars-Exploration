@@ -17,8 +17,10 @@ import com.codecool.marsexploration.mapexplorer.simulator.model.SimulationContex
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ExplorationSimulatorImpl implements ExplorationSimulator {
+    private final Random random = new Random();
 
     private final int totalSteps;
     private final int roverSight;
@@ -31,6 +33,9 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
     private final ExplorationSimulatorScannerImpl simulatorScanner;
     private final FileLoggerImpl fileLogger;
     private final MoveRover moveRover;
+    private final BuildColony buildColony;
+    private final GatheringService gatheringService;
+    private final GenerateRandom generateRandom;
 
     public ExplorationSimulatorImpl(int totalSteps,
                                     int roverSight,
@@ -41,7 +46,7 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
                                     SimulationConfigurationValidatorImpl simulationConfigurationValidator,
                                     RoutineGenerator routineGenerator,
                                     ExplorationSimulatorScannerImpl simulatorScanner,
-                                    FileLoggerImpl fileLogger, MoveRover moveRover) {
+                                    FileLoggerImpl fileLogger, MoveRover moveRover, BuildColony buildColony, GatheringService gatheringService, GenerateRandom generateRandom) {
         this.totalSteps = totalSteps;
         this.roverSight = roverSight;
         this.mapLoader = mapLoader;
@@ -53,6 +58,9 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
         this.simulatorScanner = simulatorScanner;
         this.fileLogger = fileLogger;
         this.moveRover = moveRover;
+        this.buildColony = buildColony;
+        this.gatheringService = gatheringService;
+        this.generateRandom = generateRandom;
     }
 
     @Override
@@ -68,18 +76,26 @@ public class ExplorationSimulatorImpl implements ExplorationSimulator {
                 routineGenerator,
                 outcomeAnalyzer,
                 simulationMessages,
-                moveRover);
+                moveRover,
+                buildColony,
+                gatheringService,
+                generateRandom);
 
         SimulationContextData contextData = generateContext(roverSight);
         Coordinate shipLocation = contextData.spaceshipLocation();
-        MarsRover rover = contextData.marsRover();
-        Coordinate roverStartingPosition = rover.getCurrentPosition();
+        MarsRover roverExplorer = contextData.marsRover();
+        Coordinate roverStartingPosition = roverExplorer.getCurrentPosition();
         List<Coordinate> allMovesRoutine = routineGenerator.generateSearchRoutine(roverStartingPosition, totalSteps);
         List<Coordinate> movesDone = new ArrayList<>();
 
+
         simulationMessages.displayInitialMessages(shipLocation);
-        simulationMessages.displayCurrentStep(rover, "The rover has been deployed");
-        roverBehaviour.executeRoverRoutine(allMovesRoutine, movesDone, rover);
+        simulationMessages.displayCurrentStep(roverExplorer, "The rover has been deployed");
+
+        Coordinate explorerCoordinate = new Coordinate(1,1);
+        roverBehaviour.executeRoverRoutine(allMovesRoutine, movesDone, roverExplorer, loadMap(), explorerCoordinate);
+
+        buildColony.build(roverExplorer, loadMap());
     }
 
     /**

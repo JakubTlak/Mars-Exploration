@@ -58,6 +58,9 @@ public class RoverExplorationFunctionalityImpl implements RoverExplorationFuncti
         FileLoggerImpl fileLogger = new FileLoggerImpl(loggFile);
         SimulationMessages simulationMessages = new SimulationMessagesImpl(fileLogger);
         MoveRover moveRover = new MoveRoverImpl(simulationMessages);
+        GenerateRandom generateRandom = new GenerateRandomImpl();
+        BuildColony buildColony = new BuildColonyImpl(generateRandom, coordinateCalculator, map);
+        GatheringService gatheringService = new GatheringServiceImpl();
 
         ExplorationSimulator explorationSimulator = new ExplorationSimulatorImpl(
                 totalSteps,
@@ -70,7 +73,9 @@ public class RoverExplorationFunctionalityImpl implements RoverExplorationFuncti
                 routineGenerator,
                 simulatorScanner,
                 fileLogger,
-                moveRover);
+                moveRover,
+                buildColony,
+                gatheringService, generateRandom);
 
         explorationSimulator.simulateRoverExploration();
     }

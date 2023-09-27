@@ -13,6 +13,9 @@ public interface ConstantValues {
     int MAP_DIMENSION = 64;
     int ROVER_DEPLOY_DIMENSION = 1;
     int GENERATE_MAP_QUANTITY = 3;
+    int WATER_TO_SET_UP_COLONY = 3;
+    int MINERALS_TO_SET_UP_COLONY = 3;
+
 
     double ELEMENT_TO_SPACE_RATIO = 0.5;
 
