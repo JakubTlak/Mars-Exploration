@@ -67,15 +67,7 @@ public class BuildColonyImpl implements BuildColony{
     @Override
     public Colony build(MarsRover rover, Map map) {
 
-//        Set<Coordinate> materialsCoordinate = rover.getResourceCoordinates().get(random.nextInt(1));
-//
-//        Coordinate[] materialsCoordinateArray = materialsCoordinate.toArray(new Coordinate[materialsCoordinate.size()]);
-//
-//        if(materialsCoordinateArray.length > 0){
-//            System.out.println("odpowiednio przeksztalcone");
-//        }
-//
-//        Coordinate lastCoordinate = materialsCoordinateArray[materialsCoordinateArray.length - 1];
+
         List<Coordinate> scannedResourcesCoordinates = transformMethods.mapStringSetOfCoordinatesToListOfCoordinates(
                 rover.getResourceCoordinates());
 
